@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Admin Dashboard</title>
+
+<style>
+
+body{
+  background:black;
+  color:white;
+  font-family:Arial;
+  padding:20px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  border:1px solid white;
+  padding:10px;
+  text-align:left;
+}
+
+th{
+  background:#222;
+}
+
+h1{
+  text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Applications</h1>
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Destination</th>
+</tr>
+</thead>
+
+<tbody id="tableBody">
+</tbody>
+
+</table>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCFm3vhvV-GUkjGZKmp1T266PAmb4BIkWA",
+
+  authDomain: "cosmos-site-59794.firebaseapp.com",
+
+  projectId: "cosmos-site-59794",
+
+  storageBucket: "cosmos-site-59794.firebasestorage.app",
+
+  messagingSenderId: "1099483793009",
+
+  appId: "1:1099483793009:web:372989f0546413d4677dd0"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+async function loadData(){
+
+  const querySnapshot =
+  await getDocs(collection(db, "applications"));
+
+  const tableBody =
+  document.getElementById("tableBody");
+
+  querySnapshot.forEach((doc) => {
+
+    const data = doc.data();
+
+    tableBody.innerHTML += `
+
+      <tr>
+        <td>${data.name}</td>
+        <td>${data.email}</td>
+        <td>${data.destination}</td>
+      </tr>
+
+    `;
+
+  });
+
+}
+
+loadData();
+
+</script>
+
+</body>
+
+</html>
