@@ -1254,5 +1254,118 @@ document.addEventListener('mousemove', e => {
   planet.style.transform = `translate(${dx}px, ${dy}px)`;
 });
 </script>
+ <div style="padding:40px;text-align:center;">
+
+<h2>Apply For Passage</h2>
+
+<form id="applyForm">
+
+<input
+type="text"
+id="name"
+placeholder="Name"
+required>
+
+<br><br>
+
+<input
+type="email"
+id="email"
+placeholder="Email"
+required>
+
+<br><br>
+
+<input
+type="text"
+id="destination"
+placeholder="Destination"
+required>
+
+<br><br>
+
+<button type="submit">
+Apply
+</button>
+
+</form>
+
+ </div>
+ <script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCFm3vhvV-GUkjGZKmp1T266PAmb4BIkWA",
+
+  authDomain: "cosmos-site-59794.firebaseapp.com",
+
+  projectId: "cosmos-site-59794",
+
+  storageBucket: "cosmos-site-59794.firebasestorage.app",
+
+  messagingSenderId: "1099483793009",
+
+  appId: "1:1099483793009:web:372989f0546413d4677dd0"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+document
+.getElementById("applyForm")
+.addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const name =
+    document.getElementById("name").value;
+
+  const email =
+    document.getElementById("email").value;
+
+  const destination =
+    document.getElementById("destination").value;
+
+  try {
+
+    await addDoc(collection(db, "applications"), {
+
+      name: name,
+
+      email: email,
+
+      destination: destination,
+
+      time: new Date()
+
+    });
+
+    alert("Application submitted 🚀");
+
+  }
+
+  catch(err) {
+
+    console.log(err);
+
+    alert("Error");
+
+  }
+
+});
+
+ </script>
 </body>
 </html>
